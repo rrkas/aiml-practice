@@ -1,0 +1,15 @@
+black
+fqdn
+isoduration
+jsonpointer
+jupyter
+matplotlib
+pandas
+pip-chill
+scikit-learn
+tensorflow
+tokenize-rt
+torch
+tqdm
+uri-template
+webcolors
