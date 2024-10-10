@@ -6,6 +6,7 @@ jupyter
 matplotlib
 pandas
 pip-chill
+playwright
 scikit-learn
 tensorflow
 tokenize-rt
