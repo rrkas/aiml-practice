@@ -52,7 +52,7 @@ def binary_search_iterative(
 
 
 def test_binary_search__():
-    _list = list(range(100)) + [80]
+    _list = list(range(100))
     _e1 = 80
     _e2 = 5000
 

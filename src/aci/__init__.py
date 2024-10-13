@@ -1,3 +1,2 @@
-from action import *
-from problem import *
-from state import *
+from classes import *
+from search import *
