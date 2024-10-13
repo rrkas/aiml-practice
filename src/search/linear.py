@@ -4,7 +4,7 @@ import tensorflow as tf
 import typing
 
 
-def linear_search(
+def linear_search_optimal(
     _list: typing.Union[
         typing.List,
         np.ndarray,
@@ -12,7 +12,7 @@ def linear_search(
         tf.Tensor,
     ],
     _e: typing.Any,
-):
+) -> typing.Union[int, None]:
     if isinstance(_list, list):
         try:
             return _list.index(_e)
@@ -20,7 +20,7 @@ def linear_search(
             return None
 
     elif isinstance(_list, tuple):
-        return linear_search(list(_list), _e)
+        return linear_search_optimal(list(_list), _e)
 
     elif isinstance(_list, np.ndarray):
         idx_list = np.where(_list == _e)[0]
@@ -49,7 +49,10 @@ def linear_search(
     raise Exception(f"Unhandled input list type: {type(_list)}")
 
 
-def linear_search_scratch(_list, _e):
+def linear_search_scratch(
+    _list: typing.Iterable,
+    _e: typing.Any,
+) -> typing.Union[int, None]:
     for i in range(len(_list)):
         if _list[i] == _e:
             return i
@@ -63,23 +66,47 @@ def test_linear_search__():
     _e2 = 5000
 
     print("list ==============")
-    print(linear_search(_list, _e1), linear_search_scratch(_list, _e1))
-    print(linear_search(_list, _e2), linear_search_scratch(_list, _e2))
+    print(
+        linear_search_optimal(_list, _e1),
+        linear_search_scratch(_list, _e1),
+    )
+    print(
+        linear_search_optimal(_list, _e2),
+        linear_search_scratch(_list, _e2),
+    )
 
     print("np ==============")
     _np_array = np.array(_list)
-    print(linear_search(_np_array, _e1), linear_search_scratch(_np_array, _e1))
-    print(linear_search(_np_array, _e2), linear_search_scratch(_np_array, _e2))
+    print(
+        linear_search_optimal(_np_array, _e1),
+        linear_search_scratch(_np_array, _e1),
+    )
+    print(
+        linear_search_optimal(_np_array, _e2),
+        linear_search_scratch(_np_array, _e2),
+    )
 
     print("torch ==============")
     _torch_tensor = torch.tensor(_list)
-    print(linear_search(_torch_tensor, _e1), linear_search_scratch(_torch_tensor, _e1))
-    print(linear_search(_torch_tensor, _e2), linear_search_scratch(_torch_tensor, _e2))
+    print(
+        linear_search_optimal(_torch_tensor, _e1),
+        linear_search_scratch(_torch_tensor, _e1),
+    )
+    print(
+        linear_search_optimal(_torch_tensor, _e2),
+        linear_search_scratch(_torch_tensor, _e2),
+    )
 
     print("tf ==============")
     _tf_tensor = tf.convert_to_tensor(_list)
-    print(linear_search(_tf_tensor, _e1), linear_search_scratch(_tf_tensor, _e1))
-    print(linear_search(_tf_tensor, _e2), linear_search_scratch(_tf_tensor, _e2))
+    print(
+        linear_search_optimal(_tf_tensor, _e1),
+        linear_search_scratch(_tf_tensor, _e1),
+    )
+    print(
+        linear_search_optimal(_tf_tensor, _e2),
+        linear_search_scratch(_tf_tensor, _e2),
+    )
 
 
 if __name__ == "__main__":
