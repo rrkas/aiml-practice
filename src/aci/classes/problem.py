@@ -1,7 +1,7 @@
 import typing
-from state import AbstractState
-from action import AbstractAction
-from node import Node
+from .state import AbstractState
+from .action import AbstractAction
+from .node import Node
 
 
 class AbstractProblem:
@@ -23,11 +23,14 @@ class AbstractProblem:
     def __init__(
         self,
         initial_state: AbstractState,
-        states: typing.List[AbstractState],
+        states: typing.Set[AbstractState],
     ):
         self.initial_state: AbstractState = initial_state
         self.nodes: typing.List[Node] = []
-        self.states: typing.List[AbstractState] = states
+        self.states: typing.Set[AbstractState] = states
+
+        assert all(isinstance(e, AbstractState) for e in states)
+        assert self.initial_state in self.states
 
     def actions(self, s: AbstractState) -> typing.List[AbstractAction]:
         """
@@ -61,4 +64,10 @@ class AbstractProblem:
         """
         A path cost function that assigns a numeric cost to each path.
         """
-        return NotImplementedError()
+        cost = 0
+        s = self.initial_state
+        for a in path:
+            cost += self.step_cost(s, a)
+            s = self.result(s, a)
+
+        return cost

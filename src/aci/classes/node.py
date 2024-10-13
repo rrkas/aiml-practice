@@ -1,6 +1,6 @@
 import typing
-from action import AbstractAction
-from state import AbstractState
+from . import AbstractAction
+from .state import AbstractState
 
 
 class Node:

@@ -1,5 +1,5 @@
 import typing
-from action import AbstractAction
+from .action import AbstractAction
 
 """
 A solution to a problem is an "action sequence" that leads from the initial state to a goal state.

@@ -31,7 +31,7 @@ def depth_first_search(
     frontier: LifoQueue[Node] = LifoQueue()
 
     # explored ← an empty set
-    explored: set[AbstractState] = set()
+    explored: typing.Set[AbstractState] = set()
 
     while True:
         # if EMPTY?(frontier) then return failure

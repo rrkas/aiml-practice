@@ -1,2 +1,2 @@
-from classes import *
-from search import *
+from .classes import *
+from .search import *

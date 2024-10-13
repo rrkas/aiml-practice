@@ -1,6 +1,6 @@
 import typing
-from classes import AbstractProblem, Solution, Node
-from utils import solution
+from ..classes import AbstractProblem, Solution, Node
+from ..utils import solution
 from queue import Queue
 
 
@@ -14,12 +14,12 @@ def graph_search(problem: AbstractProblem) -> typing.Union[Solution, None]:
 
         node = frontier.get()
 
-        if problem.goal_test(node):
+        if problem.goal_test(node.state):
             return solution(node)
 
-        explored.add(node)
+        explored.add(node.state)
 
-        for action in problem.actions:
+        for action in problem.actions(node.state):
             next_state = problem.result(node, action)
             if next_state not in frontier and next_state not in explored:
                 frontier.put(next_state)

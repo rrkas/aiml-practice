@@ -30,7 +30,7 @@ def breadth_first_search(
     frontier: Queue[Node] = Queue()
 
     # explored ← an empty set
-    explored: set[AbstractState] = set()
+    explored: typing.Set[AbstractState] = set()
 
     while True:
         # if EMPTY?(frontier) then return failure
