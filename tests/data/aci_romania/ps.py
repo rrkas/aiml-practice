@@ -81,7 +81,16 @@ class RomaniaProblem(AbstractProblem):
                 self.transitions.setdefault(to, {}).setdefault(from_, row["COST"])
 
     def actions(self, s: RomaniaState):
-        return [RomaniaAction(e) for e in self.transitions.get(s.state_name, {}).keys()]
+        return sorted(
+            [
+                RomaniaAction(e)
+                for e in self.transitions.get(
+                    s.state_name,
+                    {},
+                ).keys()
+            ],
+            key=lambda x: x.state_name,
+        )
 
     def step_cost(self, s: RomaniaState, a: RomaniaAction):
         return self.transitions.get(s.state_name, {}).get(a.state_name, np.inf)
