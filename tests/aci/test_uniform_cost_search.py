@@ -8,7 +8,7 @@ sys.path.insert(0, str(project_root))
 #################
 
 import random, pandas as pd
-from src.aci.search.breadth_first_search import breadth_first_search
+from src.aci.search.uniform_cost_search import uniform_cost_search
 from tests.data.aci_romania.ps import RomaniaProblem, RomaniaAction, RomaniaState
 
 df = pd.read_csv("../data/aci_romania/aci_romania_map.csv")
@@ -30,7 +30,7 @@ problem = RomaniaProblem(
     debug=True,
 )
 
-sol = breadth_first_search(problem=problem)
+sol = uniform_cost_search(problem=problem)
 print(sol)
 if sol:
     print(problem.path_cost(sol))

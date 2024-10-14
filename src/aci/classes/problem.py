@@ -1,4 +1,4 @@
-import typing
+import typing, pandas as pd
 from .state import AbstractState
 from .action import AbstractAction
 from .node import Node
@@ -72,16 +72,25 @@ class AbstractProblem:
         cost = 0
         s = self.initial_state
 
-        print(path)
+        trace = []
+
+        if self.debug:
+            print(path)
 
         for a in path[1:]:
             c = self.step_cost(s, a)
-
-            if self.debug:
-                print(s, a, c)
-
             cost += c
+            trace.append((s, a, c, cost))
+
             s = self.result(s, a)
+
+        if self.debug:
+            print(
+                pd.DataFrame(
+                    trace,
+                    columns=["FROM", "TO", "COST", "CUMM_COST"],
+                ).to_string()
+            )
 
         return cost
 

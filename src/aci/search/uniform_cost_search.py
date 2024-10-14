@@ -7,6 +7,7 @@ from heapq import heapify, heappop, heappush
 # function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
 def uniform_cost_search(
     problem: AbstractProblem,
+    debug: bool = False,
 ) -> typing.Union[Solution, None]:
     # node ← a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
     for n in problem.nodes:
@@ -14,7 +15,7 @@ def uniform_cost_search(
             node = n
 
     # frontier ← a priority queue ordered by PATH-COST, with node as the only element
-    frontier: typing.List[typing.Tuple[float, Node]] = []
+    frontier: typing.List[typing.Tuple[float, Node]] = [(0, node)]
     heapify(frontier)
 
     # explored ← an empty set
@@ -22,7 +23,7 @@ def uniform_cost_search(
 
     while True:
         # if EMPTY?(frontier) then return failure
-        if frontier.empty():
+        if len(frontier) == 0:
             return None
 
         # node ← POP(frontier) /* chooses the lowest-cost node in frontier */
@@ -40,7 +41,7 @@ def uniform_cost_search(
             # child ← CHILD-NODE(problem,node,action)
             child = child_node(problem, node, action)
 
-            frontier_states = [e for (_, e) in frontier]
+            frontier_states = [e.state for (_, e) in frontier]
 
             # if child.STATE is not in explored or frontier then
             if child.state not in explored or child.state not in frontier_states:

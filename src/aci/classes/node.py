@@ -35,3 +35,15 @@ class Node:
 
     def __repr__(self):
         return str(self)
+
+    def __gt__(self, other: "Node"):
+        return self.path_cost > other.path_cost
+
+    def __ge__(self, other: "Node"):
+        return self.path_cost >= other.path_cost
+
+    def __lt__(self, other: "Node"):
+        return self.path_cost < other.path_cost
+
+    def __le__(self, other: "Node"):
+        return self.path_cost <= other.path_cost
