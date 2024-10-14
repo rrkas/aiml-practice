@@ -44,7 +44,7 @@ def uniform_cost_search(
             frontier_states = [e.state for (_, e) in frontier]
 
             # if child.STATE is not in explored or frontier then
-            if child.state not in explored or child.state not in frontier_states:
+            if child.state not in explored and child.state not in frontier_states:
 
                 # frontier ← INSERT(child,frontier)
                 heappush(frontier, (child.path_cost, child))

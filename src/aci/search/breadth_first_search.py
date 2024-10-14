@@ -64,7 +64,7 @@ def breadth_first_search(
                 print(f"{problem}, {node}, {action} || child: {child}")
 
             # if child.STATE is not in explored or frontier then
-            if child.state not in explored or child not in frontier.queue:
+            if child.state not in explored and child not in frontier.queue:
                 # if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
                 if problem.goal_test(child.state):
                     return solution(child)

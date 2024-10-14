@@ -8,6 +8,7 @@ from queue import LifoQueue
 # function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
 def depth_first_search(
     problem: AbstractProblem,
+    debug=False,
 ) -> typing.Union[Solution, None]:
     """
     mimicking Breadth-first search on a graph.
@@ -29,17 +30,26 @@ def depth_first_search(
 
     # frontier ← a FIFO queue with node as the only element
     frontier: LifoQueue[Node] = LifoQueue()
+    frontier.put(node)
 
     # explored ← an empty set
     explored: typing.Set[AbstractState] = set()
 
     while True:
+        if debug:
+            print("\n" * 5)
+            print("frontier:", frontier.queue)
+            print("explored:", explored)
+
         # if EMPTY?(frontier) then return failure
         if frontier.empty():
             return None
 
         # node ← POP(frontier) /* chooses the shallowest node in frontier */
         node = frontier.get()
+
+        if debug:
+            print(node)
 
         # add node.STATE to explored
         explored.add(node.state)
@@ -49,8 +59,11 @@ def depth_first_search(
             # child ← CHILD-NODE(problem, node, action)
             child = child_node(problem, node, action)
 
+            if debug:
+                print(problem, node, action, child)
+
             # if child.STATE is not in explored or frontier then
-            if child.state not in explored or child not in frontier:
+            if child.state not in explored and child not in frontier.queue:
                 # if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
                 if problem.goal_test(child.state):
                     return solution(child)

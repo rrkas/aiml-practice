@@ -74,9 +74,6 @@ class AbstractProblem:
 
         trace = []
 
-        if self.debug:
-            print(path)
-
         for a in path[1:]:
             c = self.step_cost(s, a)
             cost += c
