@@ -23,10 +23,15 @@ class AbstractProblem:
     def __init__(
         self,
         initial_state: AbstractState,
+        initial_action: AbstractAction,
         states: typing.Set[AbstractState],
+        debug: bool = False,
     ):
+        self.debug: bool = debug
         self.initial_state: AbstractState = initial_state
-        self.nodes: typing.List[Node] = []
+        self.nodes: typing.List[Node] = [
+            Node(initial_action, None, 0, self.initial_state)
+        ]
         self.states: typing.Set[AbstractState] = states
 
         assert all(isinstance(e, AbstractState) for e in states)
@@ -66,8 +71,22 @@ class AbstractProblem:
         """
         cost = 0
         s = self.initial_state
-        for a in path:
-            cost += self.step_cost(s, a)
+
+        print(path)
+
+        for a in path[1:]:
+            c = self.step_cost(s, a)
+
+            if self.debug:
+                print(s, a, c)
+
+            cost += c
             s = self.result(s, a)
 
         return cost
+
+    def __str__(self):
+        return f"<{self.__class__.__name__} {hash(self)}>"
+
+    def __repr__(self):
+        return str(self)

@@ -7,6 +7,7 @@ from queue import Queue
 # function BREADTH-FIRST-SEARCH(problem) returns a solution, or failure
 def breadth_first_search(
     problem: AbstractProblem,
+    debug: bool = False,
 ) -> typing.Union[Solution, None]:
     """
     Figure 3.11 Breadth-first search on a graph.
@@ -22,23 +23,34 @@ def breadth_first_search(
         if n.state == problem.initial_state and n.path_cost == 0:
             node = n
 
+    if debug:
+        print("init node:", node)
+
     # if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
     if problem.goal_test(node.state):
         return solution(node)
 
     # frontier ← a FIFO queue with node as the only element
     frontier: Queue[Node] = Queue()
+    frontier.put(node)
 
     # explored ← an empty set
     explored: typing.Set[AbstractState] = set()
 
     while True:
+        if debug:
+            print("frontier:", frontier.queue)
+            print("explored:", explored)
+
         # if EMPTY?(frontier) then return failure
         if frontier.empty():
             return None
 
         # node ← POP(frontier) /* chooses the shallowest node in frontier */
         node = frontier.get()
+
+        if debug:
+            print("frontier node:", node)
 
         # add node.STATE to explored
         explored.add(node.state)
@@ -48,8 +60,11 @@ def breadth_first_search(
             # child ← CHILD-NODE(problem, node, action)
             child = child_node(problem, node, action)
 
+            if debug:
+                print(f"{problem}, {node}, {action} || child: {child}")
+
             # if child.STATE is not in explored or frontier then
-            if child.state not in explored or child not in frontier:
+            if child.state not in explored or child not in frontier.queue:
                 # if problem.GOAL-TEST(child.STATE) then return SOLUTION(child)
                 if problem.goal_test(child.state):
                     return solution(child)

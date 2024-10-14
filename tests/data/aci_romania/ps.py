@@ -10,11 +10,6 @@ sys.path.insert(0, str(project_root))
 from src.aci.classes import AbstractProblem, AbstractAction, AbstractState
 import pandas as pd, numpy as np
 
-_df = pd.read_csv("./aci_romania_map.csv")
-_states = set([*_df["FROM"].unique(), *_df["TO"].unique()])
-
-################
-
 
 class RomaniaAction(AbstractAction):
     def __init__(self, state_name: str):
@@ -31,6 +26,9 @@ class RomaniaAction(AbstractAction):
         return hash(self.state_name)
 
     def __eq__(self, value: "RomaniaAction"):
+        if value is None:
+            return False
+
         return self.state_name == value.state_name
 
 
@@ -49,22 +47,33 @@ class RomaniaState(AbstractState):
         return hash(self.state_name)
 
     def __eq__(self, value: "RomaniaState"):
+        if value is None:
+            return False
+
         return self.state_name == value.state_name
 
 
 class RomaniaProblem(AbstractProblem):
-
     def __init__(
         self,
         initial_state: RomaniaState,
+        initial_action: RomaniaAction,
         states: list[RomaniaState],
         goal: RomaniaState,
+        data: pd.DataFrame,
+        debug: bool = False,
     ):
-        super().__init__(initial_state, states)
+        super().__init__(
+            initial_state=initial_state,
+            initial_action=initial_action,
+            states=states,
+            debug=debug,
+        )
         self.goal = goal
+        self.df = data
 
         self.transitions: dict[RomaniaState, dict[RomaniaState, float]] = {}
-        for idx, row in _df.iterrows():
+        for idx, row in self.df.iterrows():
             from_, to = row["FROM"], row["TO"]
             self.transitions.setdefault(from_, {}).setdefault(to, row["COST"])
 
@@ -72,7 +81,7 @@ class RomaniaProblem(AbstractProblem):
                 self.transitions.setdefault(to, {}).setdefault(from_, row["COST"])
 
     def actions(self, s: RomaniaState):
-        return self.transitions.get(s.state_name, {}).keys()
+        return [RomaniaAction(e) for e in self.transitions.get(s.state_name, {}).keys()]
 
     def step_cost(self, s: RomaniaState, a: RomaniaAction):
         return self.transitions.get(s.state_name, {}).get(a.state_name, np.inf)
@@ -89,16 +98,22 @@ class RomaniaProblem(AbstractProblem):
 
 ################
 
-_state_objs = sorted(
-    [RomaniaState(e) for e in _states],
-    key=lambda x: x.state_name,
-)
-ps = RomaniaProblem(
-    initial_state=_state_objs[0], states=_state_objs, goal=random.choice(_state_objs)
-)
-# print(ps.states)
-# print(ps.transitions)
-# print(_state_objs[0], _state_objs[-1], ps.step_cost(_state_objs[0], _state_objs[-1]))
-# print(ps.result(_state_objs[0], RomaniaAction(_state_objs[0].state_name)))
-# print(ps.result(_state_objs[0], RomaniaAction(_state_objs[-1].state_name)))
-# print(ps.path_cost([RomaniaAction("Zerind"), RomaniaAction("Oradea")]))
+if __name__ == "__main__":
+    df = pd.read_csv("../data/aci_romania/aci_romania_map.csv")
+    _states = set([*df["FROM"].unique(), *df["TO"].unique()])
+
+    _state_objs = sorted(
+        [RomaniaState(e) for e in _states],
+        key=lambda x: x.state_name,
+    )
+    ps = RomaniaProblem(
+        initial_state=_state_objs[0],
+        states=_state_objs,
+        goal=random.choice(_state_objs),
+    )
+    # print(ps.states)
+    # print(ps.transitions)
+    # print(_state_objs[0], _state_objs[-1], ps.step_cost(_state_objs[0], _state_objs[-1]))
+    # print(ps.result(_state_objs[0], RomaniaAction(_state_objs[0].state_name)))
+    # print(ps.result(_state_objs[0], RomaniaAction(_state_objs[-1].state_name)))
+    # print(ps.path_cost([RomaniaAction("Zerind"), RomaniaAction("Oradea")]))

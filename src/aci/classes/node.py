@@ -29,3 +29,9 @@ class Node:
         self.parent: "Node" = parent
         self.path_cost: float = path_cost
         self.state: AbstractState = state
+
+    def __str__(self):
+        return f"<{self.__class__.__name__} action={self.action} parent={self.parent} path_cost={self.path_cost} state={self.state}>"
+
+    def __repr__(self):
+        return str(self)
