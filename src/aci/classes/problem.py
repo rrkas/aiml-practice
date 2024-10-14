@@ -29,9 +29,10 @@ class AbstractProblem:
     ):
         self.debug: bool = debug
         self.initial_state: AbstractState = initial_state
-        self.nodes: typing.List[Node] = [
-            Node(initial_action, None, 0, self.initial_state)
-        ]
+        self.initial_action: AbstractAction = initial_action
+        self.initial_node: Node = Node(initial_action, None, 0, self.initial_state)
+
+        self.nodes: typing.List[Node] = [self.initial_node]
         self.states: typing.Set[AbstractState] = states
 
         assert all(isinstance(e, AbstractState) for e in states)
