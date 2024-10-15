@@ -3,7 +3,7 @@ import unittest, random
 
 class TestAlgorithms(unittest.TestCase):
     def test_ucs(self):
-        from .test_uniform_cost_search import problem, uniform_cost_search
+        from .uninformed.test_uniform_cost_search import problem, uniform_cost_search
 
         sol = uniform_cost_search(problem)
 
@@ -11,7 +11,7 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(len(sol) > 1)
 
     def test_ils(self):
-        from .test_iterative_lengthening_search import (
+        from .uninformed.test_iterative_lengthening_search import (
             problem,
             iterative_lengthening_search,
         )
@@ -22,7 +22,7 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(len(sol) > 1)
 
     def test_ids(self):
-        from .test_iterative_deepening_search import (
+        from .uninformed.test_iterative_deepening_search import (
             problem,
             iterative_deepening_search,
         )
@@ -33,7 +33,7 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(len(sol) > 1)
 
     def test_dls(self):
-        from .test_depth_limited_search import (
+        from .uninformed.test_depth_limited_search import (
             problem,
             depth_limited_search,
         )
@@ -46,7 +46,7 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(len(sol) > 1 and len(sol) <= limit + 1)
 
     def test_dfs(self):
-        from .test_depth_first_search import (
+        from .uninformed.test_depth_first_search import (
             problem,
             depth_first_search,
         )
@@ -57,12 +57,32 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(len(sol) > 1)
 
     def test_bfs(self):
-        from .test_breadth_first_search import (
+        from .uninformed.test_breadth_first_search import (
             problem,
             breadth_first_search,
         )
 
         sol = breadth_first_search(problem)
 
+        self.assertIsNot(sol, None)
+        self.assertTrue(len(sol) > 1)
+
+    def test_gbfs(self):
+        from .informed.test_greedy_best_first_search import (
+            problem,
+            greedy_best_first_search,
+        )
+
+        sol = greedy_best_first_search(problem)
+        self.assertIsNot(sol, None)
+        self.assertTrue(len(sol) > 1)
+
+    def test_a_star(self):
+        from .informed.test_greedy_best_first_search import (
+            problem,
+            greedy_best_first_search,
+        )
+
+        sol = greedy_best_first_search(problem)
         self.assertIsNot(sol, None)
         self.assertTrue(len(sol) > 1)
