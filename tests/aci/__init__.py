@@ -78,11 +78,11 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(len(sol) > 1)
 
     def test_a_star(self):
-        from .informed.test_greedy_best_first_search import (
+        from .informed.test_a_star_search import (
             problem,
-            greedy_best_first_search,
+            a_star_search,
         )
 
-        sol = greedy_best_first_search(problem)
+        sol = a_star_search(problem)
         self.assertIsNot(sol, None)
         self.assertTrue(len(sol) > 1)
