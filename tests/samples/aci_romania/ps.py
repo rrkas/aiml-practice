@@ -108,7 +108,7 @@ class RomaniaProblem(AbstractProblem):
 ################
 
 if __name__ == "__main__":
-    df = pd.read_csv("../data/aci_romania/aci_romania_map.csv")
+    df = pd.read_csv("../samples/aci_romania/aci_romania_map.csv")
     _states = set([*df["FROM"].unique(), *df["TO"].unique()])
 
     _state_objs = sorted(

@@ -9,9 +9,9 @@ sys.path.insert(0, str(project_root))
 
 import random, pandas as pd
 from src.aci.search.uniform_cost_search import uniform_cost_search
-from tests.data.aci_romania.ps import RomaniaProblem, RomaniaAction, RomaniaState
+from tests.samples.aci_romania.ps import RomaniaProblem, RomaniaAction, RomaniaState
 
-df = pd.read_csv("../data/aci_romania/aci_romania_map.csv")
+df = pd.read_csv("../samples/aci_romania/aci_romania_map.csv")
 
 states = sorted(set([*df["FROM"].unique(), *df["TO"].unique()]))
 state_objs = [RomaniaState(s) for s in states]
