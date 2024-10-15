@@ -33,12 +33,16 @@ class RomaniaAction(AbstractAction):
 
 
 class RomaniaState(AbstractState):
-    def __init__(self, state_name: str):
-        super().__init__()
+    def __init__(
+        self,
+        state_name: str,
+        heuristic_value: float = None,
+    ):
+        super().__init__(heuristic_value)
         self.state_name = state_name
 
     def __str__(self):
-        return f"<{self.__class__.__name__} '{self.state_name}'>"
+        return f"<{self.__class__.__name__}  '{self.state_name}'>"
 
     def __repr__(self):
         return str(self)

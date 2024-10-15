@@ -10,6 +10,7 @@
     "linewidth",
     "nbconvert",
     "ncolors",
+    "ONEDNN",
     "webpdf"
   ]
 }

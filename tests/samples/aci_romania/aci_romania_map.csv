@@ -1,24 +1,24 @@
 FROM,TO,COST,UNI_BI
-Oradea,Zerind,71,bi
-Oradea,Sibiu,151,bi
-Zerind,Arad,75,bi
-Arad,Timisoara,118,bi
 Arad,Sibiu,140,bi
-Timisoara,Lugoj,111,bi
+Arad,Timisoara,118,bi
+Bucharest,Urziceni,85,bi
+Craiova,Pitesti,138,bi
+Craiova,Rimnicu Vilcea,146,bi
+Drobeta,Craiova,120,bi
+Fagaras,Bucharest,211,bi
+Giurgiu,Bucharest,90,bi
+Hirsova,Eforie,86,bi
+Iasi,Neamt,87,bi
 Lugoj,Mehadia,70,bi
 Mehadia,Drobeta,75,bi
-Drobeta,Craiova,120,bi
-Craiova,Rimnicu Vilcea,146,bi
-Craiova,Pitesti,138,bi
+Oradea,Sibiu,151,bi
+Oradea,Zerind,71,bi
 Pitesti,Bucharest,101,bi
 Pitesti,Rimnicu Vilcea,97,bi
 Rimnicu Vilcea,Sibiu,80,bi
 Sibiu,Fagaras,99,bi
-Fagaras,Bucharest,211,bi
-Giurgiu,Bucharest,90,bi
-Bucharest,Urziceni,85,bi
+Timisoara,Lugoj,111,bi
 Urziceni,Hirsova,98,bi
-Vaslui,Urziceni,142,bi
-Hirsova,Eforie,86,bi
 Vaslui,Iasi,92,bi
-Iasi,Neamt,87,bi
+Vaslui,Urziceni,142,bi
+Zerind,Arad,75,bi

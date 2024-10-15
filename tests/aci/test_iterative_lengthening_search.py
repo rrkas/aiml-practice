@@ -8,18 +8,19 @@ sys.path.insert(0, str(project_root))
 #################
 
 import random, pandas as pd
-from src.aci.search.iterative_lengthening_search import iterative_lengthening_search
+from src.aci.search.uninformed.iterative_lengthening_search import (
+    iterative_lengthening_search,
+)
 from tests.samples.aci_romania.ps import RomaniaProblem, RomaniaAction, RomaniaState
 
-df = pd.read_csv("../samples/aci_romania/aci_romania_map.csv")
+df = pd.read_csv(project_root / "tests/samples/aci_romania/aci_romania_map.csv")
 
 states = sorted(set([*df["FROM"].unique(), *df["TO"].unique()]))
 state_objs = [RomaniaState(s) for s in states]
 
 start_state = random.choice(state_objs)
-goal_state = random.choice(state_objs)
+goal_state = random.choice([e for e in state_objs if e != start_state])
 
-print(start_state, goal_state)
 
 problem = RomaniaProblem(
     states=state_objs,
@@ -27,10 +28,13 @@ problem = RomaniaProblem(
     initial_action=RomaniaAction("__START__"),
     goal=goal_state,
     data=df,
-    debug=True,
 )
 
-sol = iterative_lengthening_search(problem=problem)
-print(sol)
-if sol:
-    print(problem.path_cost(sol))
+
+if __name__ == "__main__":
+    print(start_state, goal_state)
+
+    sol = iterative_lengthening_search(problem=problem)
+    print(sol)
+    if sol:
+        print(problem.path_cost(sol))
