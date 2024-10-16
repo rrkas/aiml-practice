@@ -40,8 +40,9 @@ class TestAlgorithms(unittest.TestCase):
 
         limit = random.randint(1, len(problem.states) // 2)
 
-        sol = depth_limited_search(problem, limit)
+        cutoff, sol = depth_limited_search(problem, limit)
 
+        self.assertFalse(cutoff)
         self.assertIsNot(sol, None)
         self.assertTrue(len(sol) > 1 and len(sol) <= limit + 1)
 
@@ -96,6 +97,20 @@ class TestAlgorithms(unittest.TestCase):
         sol = iterative_deepening_a_star_search(problem)
 
         print(problem.initial_node, problem.goal, len(sol), sol)
+
+        # can result to cutoff and no result
+        self.assertIsNot(sol, None)
+        self.assertTrue(len(sol) > 1)
+
+    def test_rbfs(self):
+        from .informed.test_recursive_best_first_search import (
+            problem,
+            recursive_best_first_search,
+        )
+
+        cutoff, sol = recursive_best_first_search(problem)
+
+        # print(problem.initial_node, problem.goal, len(sol), sol)
 
         # can result to cutoff and no result
         self.assertIsNot(sol, None)

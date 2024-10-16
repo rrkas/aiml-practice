@@ -8,6 +8,10 @@ def iterative_deepening_a_star_search(
     max_f_limit: float = 1000,
     debug: bool = False,
 ) -> typing.Union[Solution, None]:
+    problem.initial_node.f_value = (
+        problem.initial_node.path_cost + problem.initial_node.state.heuristic_value
+    )
+
     i = 1
     while (2**i) <= max_f_limit:
 
@@ -40,7 +44,7 @@ def recursive_f_cost_limited_search(
     if problem.goal_test(node.state):
         return False, solution(node)
 
-    elif node.path_cost + node.state.heuristic_value > f_limit:
+    elif node.f_value > f_limit:
         return True, solution(node)
 
     else:
@@ -48,6 +52,7 @@ def recursive_f_cost_limited_search(
         for action in problem.actions(node.state):
 
             child = child_node(problem, node, action)
+            child.f_value = child.path_cost + child.state.heuristic_value
 
             cutoff_occurred, result = recursive_f_cost_limited_search(
                 node=child,

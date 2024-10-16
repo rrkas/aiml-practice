@@ -14,10 +14,10 @@ def a_star_search(
         if n.state == problem.initial_state and n.path_cost == 0:
             node = n
 
+    node.f_value = node.path_cost + node.state.heuristic_value
+
     # frontier ← a priority queue ordered by PATH-COST, with node as the only element
-    frontier: typing.List[typing.Tuple[float, Node]] = [
-        (0 + node.state.heuristic_value, node)
-    ]
+    frontier: typing.List[typing.Tuple[float, Node]] = [(node.f_value, node)]
     heapify(frontier)
 
     # explored ← an empty set
@@ -42,20 +42,14 @@ def a_star_search(
         for action in problem.actions(node.state):
             # child ← CHILD-NODE(problem,node,action)
             child = child_node(problem, node, action)
+            child.f_value = child.path_cost + child.state.heuristic_value
 
             frontier_states = [e.state for (_, e) in frontier]
 
             # if child.STATE is not in explored or frontier then
             if child.state not in explored and child.state not in frontier_states:
-
                 # frontier ← INSERT(child,frontier)
-                heappush(
-                    frontier,
-                    (
-                        child.path_cost + child.state.heuristic_value,
-                        child,
-                    ),
-                )
+                heappush(frontier, (child.f_value, child))
 
                 # re-order priority queue
                 heapify(frontier)
@@ -64,15 +58,9 @@ def a_star_search(
             elif child.state in frontier_states:
                 idx = frontier_states.index(child.state)
                 frontier_node = frontier[idx][1]
-                if (frontier_node.path_cost + frontier_node.state.heuristic_value) > (
-                    child.path_cost + child.state.heuristic_value
-                ):
-
+                if frontier_node.f_value > child.f_value:
                     # replace that frontier node with child
-                    frontier[idx] = (
-                        child.path_cost + child.state.heuristic_value,
-                        child,
-                    )
+                    frontier[idx] = (child.f_value, child)
 
                     # re-order priority queue
                     heapify(frontier)

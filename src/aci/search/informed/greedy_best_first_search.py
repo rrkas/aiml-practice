@@ -34,6 +34,7 @@ def greedy_best_first_search(
             children.append((child.state.heuristic_value, child))
 
         if debug:
+
             print("children:", children)
 
         if len(children) == 0:

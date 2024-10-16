@@ -30,20 +30,23 @@ class Node:
         self.path_cost: float = path_cost
         self.state: AbstractState = state
 
+        # can be path_cost, can be state.heuristic or can be something else
+        self.f_value: float = None
+
     def __str__(self):
-        return f"<{self.__class__.__name__} action={self.action} parent=self.parent path_cost={self.path_cost} state={self.state} {hash(self)}>"
+        return f"<{self.__class__.__name__} action={self.action} parent=self.parent path_cost={self.path_cost} f_value={self.f_value} state={self.state} {hash(self)}>"
 
     def __repr__(self):
         return str(self)
 
     def __gt__(self, other: "Node"):
-        return self.path_cost > other.path_cost
+        return self.f_value > other.f_value
 
     def __ge__(self, other: "Node"):
-        return self.path_cost >= other.path_cost
+        return self.f_value >= other.f_value
 
     def __lt__(self, other: "Node"):
-        return self.path_cost < other.path_cost
+        return self.f_value < other.f_value
 
     def __le__(self, other: "Node"):
-        return self.path_cost <= other.path_cost
+        return self.f_value <= other.f_value
