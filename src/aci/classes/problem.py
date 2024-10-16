@@ -66,7 +66,11 @@ class AbstractProblem:
         """
         return NotImplementedError()
 
-    def path_cost(self, path: typing.List[AbstractAction]) -> float:
+    def path_cost(
+        self,
+        path: typing.List[AbstractAction],
+        debug: bool = False,
+    ) -> float:
         """
         A path cost function that assigns a numeric cost to each path.
         """
@@ -82,7 +86,7 @@ class AbstractProblem:
 
             s = self.result(s, a)
 
-        if self.debug:
+        if self.debug or debug:
             print(
                 pd.DataFrame(
                     trace,

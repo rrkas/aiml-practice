@@ -86,3 +86,17 @@ class TestAlgorithms(unittest.TestCase):
         sol = a_star_search(problem)
         self.assertIsNot(sol, None)
         self.assertTrue(len(sol) > 1)
+
+    def test_ida_star(self):
+        from .informed.test_iterative_deepening_a_star_search import (
+            problem,
+            iterative_deepening_a_star_search,
+        )
+
+        sol = iterative_deepening_a_star_search(problem)
+
+        print(problem.initial_node, problem.goal, len(sol), sol)
+
+        # can result to cutoff and no result
+        self.assertIsNot(sol, None)
+        self.assertTrue(len(sol) > 1)
